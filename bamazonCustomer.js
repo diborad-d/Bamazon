@@ -26,12 +26,24 @@ app.get("/products", (req, res) => {
 
 function runSearch() {
   inquirer
-    .prompt({
-      name: "action",
-      type: "list",
-      message: "what are you shopping for?",
-      choices: ["Find products by product_name", "Find products by dept", "Find products by price", "Search for a specific product"]
-    })
+    // .prompt({
+    //   name: "action",
+    //   type: "list",
+    //   message: "what are you shopping for?",
+    //   choices: ["Find products by product_name", "Find products by dept", "Find products by price", "Search for a specific product"]
+    // })
+    .prompt(
+        {
+          name: "product_name",
+          type: "input",
+          message: "what product is the ID of the product you would like to buy?"
+        },
+        {
+          name: "product_name",
+          type: "input",
+          message: "how many units of the product you would like to buy?"
+        }
+      )
     .then(function(answer) {
       switch (answer.action) {
         case "Find products by product_name":
@@ -49,17 +61,24 @@ function runSearch() {
 // });
 function productSearch() {
   inquirer
-    .prompt({
-      name: "product_name",
-      type: "input",
-      message: "what product would you like to search for?"
-    })
+    .prompt(
+      {
+        name: "product_name",
+        type: "input",
+        message: "what product is the ID of the product you would like to buy?"
+      },
+      {
+        name: "product_name",
+        type: "input",
+        message: "how many units of the product they would like to buy?"
+      }
+    )
     .then(function(answer) {
       var query = "SELECT product_name FROM bamazon_DB WHERE?";
       connection.query(query, { product_name: answer.product_name }, function(err, res) {
         if (err) throw err;
         for (var i = 0; i < res.length; i++) {
-          console.log("product name:" + res[i].product_name + "|| dept: " + res[i].dept);
+          console.log("product name:" + res[i].product_name + "|| dept: " + res[i].dept_name);
         }
         runSearch();
       });
