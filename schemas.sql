@@ -10,5 +10,5 @@ CREATE TABLE products
   dept_name VARCHAR(100) NULL,
   price INT(100),
   stock_quantity VARCHAR(100),
-  PRIMARY KEY (position)
+  PRIMARY KEY (id)
 );
