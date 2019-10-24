@@ -1,88 +1,62 @@
 var inquirer = require("inquirer");
 var express = require("express");
 var mysql = require("mysql");
-const app = express();
+var app = express();
 //connection
-const connection = mysql.createConnection({
+var con = mysql.createConnection({
   host: "localhost",
-  port: 3000,
+  port: 3306,
   user: "root",
-  password: "",
-  database: "bamazon_DB"
+  password: "password",
+  database: "bamazon"
 });
 //routes
-connection.connect();
+// db.connect();
 
-app.get("/products", (req, res) => {
-  const sql = "SELECT * FROM products";
+// app.get("/products", (req, res) => {
 
-  connection.connect(sql, (err, result) => {
-    if (err) throw err;
-    console.log("there's an error retreiving data");
-    runSearch();
-    res.send(result);
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected");
+  con.query("SELECT * FROM products", function(err,res){
+    if (err) throw error;
+    start();
   });
-});
-
-function runSearch() {
-  inquirer
-    // .prompt({
-    //   name: "action",
-    //   type: "list",
-    //   message: "what are you shopping for?",
-    //   choices: ["Find products by product_name", "Find products by dept", "Find products by price", "Search for a specific product"]
-    // })
-    .prompt(
+  var start = function() {
+    inquirer
+      .prompt(
         {
-          name: "product_name",
-          type: "input",
-          message: "what product is the ID of the product you would like to buy?"
+          name: "id",
+          type: "list",
+          message: "what is the product ID would like to buy?",
+          choices: ["1", "2", "3", "4", "5", "6"]
         },
         {
-          name: "product_name",
+          name: "quantity",
           type: "input",
-          message: "how many units of the product you would like to buy?"
+          message: "how many units of the product they would like to buy?"
         }
       )
-    .then(function(answer) {
-      switch (answer.action) {
-        case "Find products by product_name":
-          productSearch();
-          break;
-        default:
-          "please choose from options provided";
-          break;
-      }
-    });
-}
-// db.query("SELECT * FROM products", function(err, rows, fields) {
-//   if (err) throw err;
-//   res.send(result);
-// });
-function productSearch() {
-  inquirer
-    .prompt(
-      {
-        name: "product_name",
-        type: "input",
-        message: "what product is the ID of the product you would like to buy?"
-      },
-      {
-        name: "product_name",
-        type: "input",
-        message: "how many units of the product they would like to buy?"
-      }
-    )
-    .then(function(answer) {
-      var query = "SELECT product_name FROM bamazon_DB WHERE?";
-      connection.query(query, { product_name: answer.product_name }, function(err, res) {
-        if (err) throw err;
-        for (var i = 0; i < res.length; i++) {
-          console.log("product name:" + res[i].product_name + "|| dept: " + res[i].dept_name);
-        }
-        runSearch();
-      });
-    });
-}
+      .then(function(answer) {
+        //if (answer.idOrname == num) {
+        //}
 
-app.listen(3000, () => console.log("Server is running"));
+        //       var query = "SELECT product_name FROM bamazon_DB WHERE?";
+        //       connection.query(query, { product_name: answer.product_name }, function(err, res) {
+        //         if (err) throw err;
+        //         for (var i = 0; i < res.length; i++) {
+        //           console.log("product name:" + res[i].product_name + "|| dept: " + res[i].dept_name);
+        //         }
+        //         runSearch();
+        //       });
+        //     });
+        // }
+       
+        con.query("SELECT * FROM products WHERE item_id= ?", [answer.id], function(err, result) {
+          if (err) throw error;
+          console.log(result);
+        });
+      });
+    };
+ });
+// app.listen(3000, () => console.log("Connected!"));
