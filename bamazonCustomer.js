@@ -2,7 +2,7 @@ var inquirer = require("inquirer");
 var express = require("express");
 var mysql = require("mysql");
 var app = express();
-//connection
+
 var con = mysql.createConnection({
   host: "localhost",
   port: 3306,
@@ -10,15 +10,11 @@ var con = mysql.createConnection({
   password: "password",
   database: "bamazon"
 });
-//routes
-// db.connect();
-
-// app.get("/products", (req, res) => {
 
 con.connect(function(err) {
   if (err) throw err;
   console.log("Connected");
-  con.query("SELECT * FROM products", function(err,res){
+  con.query("SELECT * FROM products", function(err, res) {
     if (err) throw error;
     start();
   });
@@ -26,10 +22,13 @@ con.connect(function(err) {
     inquirer
       .prompt(
         {
-          name: "id",
           type: "list",
+          name: "choice",
           message: "what is the product ID would like to buy?",
-          choices: ["1", "2", "3", "4", "5", "6"]
+          choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Q"],
+          validate: function(val) {
+            return !isNaN(val) || val.toLowerCase() === "q";
+          }
         },
         {
           name: "quantity",
@@ -38,25 +37,11 @@ con.connect(function(err) {
         }
       )
       .then(function(answer) {
-        //if (answer.idOrname == num) {
-        //}
-
-        //       var query = "SELECT product_name FROM bamazon_DB WHERE?";
-        //       connection.query(query, { product_name: answer.product_name }, function(err, res) {
-        //         if (err) throw err;
-        //         for (var i = 0; i < res.length; i++) {
-        //           console.log("product name:" + res[i].product_name + "|| dept: " + res[i].dept_name);
-        //         }
-        //         runSearch();
-        //       });
-        //     });
-        // }
-       
+        //
         con.query("SELECT * FROM products WHERE item_id= ?", [answer.id], function(err, result) {
           if (err) throw error;
           console.log(result);
         });
       });
-    };
- });
-// app.listen(3000, () => console.log("Connected!"));
+  };
+});
