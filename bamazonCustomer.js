@@ -43,7 +43,6 @@ function desiredItem(inventory) {
       checkIfShouldExit(val.choice);
       var choiceId = parseInt(val.choice);
       var product = checkInventory(choiceId, inventory);
-
       if (product) {
         promptCustomerForQuantity(product);
       } else {
@@ -79,8 +78,7 @@ function promptCustomerForQuantity(product) {
 }
 
 function makePurchase(product, quantity) {
-  connection.query("UPDATE products SET stock_quantity = stock_quantity - ? WHERE item_id = ?", [quantity, product.item_id], function(err, res) {
-    
+  connection.query("UPDATE products SET stock_quantity = stock_quantity - ? WHERE id = ?", [quantity, product.id], function(err, res) {
     console.log("\nYour purchace was successful! Thank you for shopping with us!" + quantity + " " + product.product_name + "'s!");
     loadProducts();
   });
@@ -88,11 +86,11 @@ function makePurchase(product, quantity) {
 
 function checkInventory(choiceId, inventory) {
   for (var i = 0; i < inventory.length; i++) {
-    if (inventory[i].item_id === choiceId) {
+    if (inventory[i].id === choiceId) {
       return inventory[i];
     }
   }
- 
+
   return null;
 }
 
