@@ -46,7 +46,7 @@ function desiredItem(inventory) {
       if (product) {
         promptCustomerForQuantity(product);
       } else {
-        console.log("\n Sorry, This item is out of stock.");
+        console.log("\n Sorry, Item not found!");
         loadProducts();
       }
     });
