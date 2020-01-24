@@ -1,8 +1,7 @@
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '';
-DROP DATABASE IF EXISTS bamazon;
-CREATE DATABASE bamazon;
+DROP DATABASE IF EXISTS bamazon_DB;
+CREATE DATABASE bamazon_DB;
 
-USE bamazon;
+USE bamazon_DB;
 
 CREATE TABLE products(
   item_id INT AUTO_INCREMENT NOT NULL,
@@ -13,16 +12,22 @@ CREATE TABLE products(
   primary key(item_id)
 );
 
-SELECT * FROM products;
 
-INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("Uncharted 4", "Video Games", 49.95, 150),
-  ("DOOM", "Video Games", 59.99, 200),
-  ("Crate of Spam", "Food and Drink", 24.50, 50),
-  ("Cool Shades", "Apparel", 75.00, 5),
-  ("Worn Denim Jeans", "Apparel", 54.25, 35),
-  ("Survival Towel", "Necessities", 42.42, 42),
-  ("Bill and Ted's Excellent Adventure", "Films", 15.00, 25),
-  ("Mad Max: Fury Road", "Films", 25.50, 57),
-  ("Monopoly", "Board Games", 30.50, 35),
-  ("Yahtzee", "Board Games", 19.95, 23);
+  SELECT * FROM products;
+
+  INSERT INTO products
+    (product_name, department_name, price, stock_quantity)
+  VALUES
+
+    ("Denim pants", "Clothing", 30, 54),
+    ("Perfume", "Accessories", 150, 200),
+    ("Boots", "Shoes", 130, 100),
+    ("Jacket", "Clothing", 30, 20),
+    ("Polo Shirt", "clothing", 30, 60),
+    ("Shoulder bag", "Accessories", 75, 30),
+    ("Tennies", "Shoes", 60, 120),
+    ("Ear rings", "Accessories", 12, 20),
+    ("Portable charger", "Technology", 35, 125),
+    ("Diary", 'Education', '10', '15'),
+    ('Yoga pants', "clothing", 40, 50),
+    ("iphone charger", "electronics", 12, 10);
