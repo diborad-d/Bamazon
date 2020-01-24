@@ -64,8 +64,7 @@ function promptCustomerForItem(inventory) {
       if (product) {
         // Pass the chosen product to promptCustomerForQuantity
         promptCustomerForQuantity(product);
-      }
-      else {
+      } else {
         // Otherwise let them know the item is not in the inventory, re-run loadProducts
         console.log("\nThat item is not in the inventory.");
         loadProducts();
@@ -95,8 +94,7 @@ function promptCustomerForQuantity(product) {
       if (quantity > product.stock_quantity) {
         console.log("\nInsufficient quantity!");
         loadProducts();
-      }
-      else {
+      } else {
         // Otherwise run makePurchase, give it the product information and desired quantity to purchase
         makePurchase(product, quantity);
       }
@@ -105,15 +103,11 @@ function promptCustomerForQuantity(product) {
 
 // Purchase the desired quantity of the desired item
 function makePurchase(product, quantity) {
-  connection.query(
-    "UPDATE products SET stock_quantity = stock_quantity - ? WHERE item_id = ?",
-    [quantity, product.item_id],
-    function(err, res) {
-      // Let the user know the purchase was successful, re-run loadProducts
-      console.log("\nSuccessfully purchased " + quantity + " " + product.product_name + "'s!");
-      loadProducts();
-    }
-  );
+  connection.query("UPDATE products SET stock_quantity = stock_quantity - ? WHERE item_id = ?", [quantity, product.item_id], function(err, res) {
+    // Let the user know the purchase was successful, re-run loadProducts
+    console.log("\nSuccessfully purchased " + quantity + " " + product.product_name + "'s!");
+    loadProducts();
+  });
 }
 
 // Check to see if the product the user chose exists in the inventory
