@@ -9,9 +9,24 @@ Bamazon is a cli app shopping app. It has customer and manager dbs.
 **Mananger**
   It also allows Managers check and add inventory.
 
-**Technology used** 
+**build env** 
 
-## Node.js
-## MYSQL
+# Node.js
+
+
+
+# Dependencies: 
+
+express
+mysql
+console.table
+inquirer
+
+**How to run the app:**
+  1. Go to your terminal.
+  2. cd to the app.
+  3. run 
+
+ 
 
 
