@@ -27,7 +27,7 @@ inquirer
   2. cd to the app.
   3. run 
   
-  **Here is a link to the app**
+  **Here is a link to the app:**
   https://www.youtube.com/watch?v=7H8YW2TJ22w
 
  
